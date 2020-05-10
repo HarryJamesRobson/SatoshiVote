@@ -3,11 +3,6 @@ from bitcoin import *
 import qrcode
 import os
 
-desktop_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
-
-    
-
 #Generate bitcoin keys and addresses
 def create_keys(num_address):
     h = (num_address)
@@ -45,6 +40,8 @@ def monitor_results(address_matrix, num_address):
             print("Option " + (str(for_counter + 1)) + ": " + str((tx_count))) 
             for_counter = for_counter + 1
 
+desktop_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
 while True:
     mode = input("Start new campaign (1) or monitor an ongoing campign (2)? ")
     if mode == "1":
@@ -56,17 +53,20 @@ while True:
             monitor_results(address_matrix, num_address)
         else:
             print("test")
+            
     elif mode == "2":
         print("Create a .txt document containing an address on each line that you would like to monitor")
         file_location = input("enter the path of the file")
         address_list = []
         f = open((file_location), "r")
+        
         for line in f:
             stripped_line = line.strip()
             line_list = stripped_line.split()
             address_list.append(line_list)
         f.close()
-        while Trie:
+        
+        while True:
             for_counter = 0
             time.sleep(5)
             print("\n")

@@ -1,14 +1,13 @@
-#SatoshiVote By Harry Robson
+#SatoshiVote by Harry Robson
 from bitcoin import *
 import qrcode
 import os
 
-#Generate bitcoin keys and addresses
+#Generate Bitcoin keys
 def create_keys(num_address):
     h = (num_address)
     w = 3
     address_matrix = [[0 for x in range(w)] for y in range(h)]
-    
     for_counter = 0
     for i in range(0, num_address):
         priv_key = random_key()
@@ -20,16 +19,28 @@ def create_keys(num_address):
         for_counter = for_counter + 1
     return address_matrix
 
-#Generate QR code for each address
+#Generate QR code for each address and output address details
 def create_qr_codes(address_matrix, num_address, desktop_path):
     for_counter = 0
     for i in range(0, num_address):
         img = qrcode.make(address_matrix[(for_counter)][1])
         img.save((desktop_path) + "\satoshivote" + str((for_counter + 1)) + ".png")
         for_counter = for_counter + 1
-
-#Monitor results
-def monitor_results(address_matrix, num_address):
+    #Save addresses to one file, private keys to another
+    f = open((desktop_path) + "\\address_list.txt","w+")
+    for_counter = 0
+    for i in range(0, num_address):
+        f.write(str(address_matrix[int(for_counter)][1]) + "\n")
+        for_counter = for_counter + 1
+    f.close()
+    f = open((desktop_path) + "\\private_list.txt", "w+")
+    for_counter = 0
+    for i in range(0, num_address):
+        f.write(str(address_matrix[int(for_counter)][0]) + "\n")
+        for_counter = for_counter + 1
+        
+#View live results
+def monitor_results(address_matrix, num_address, address_list):
     while True:
         for_counter = 0
         time.sleep(5)
@@ -42,38 +53,23 @@ def monitor_results(address_matrix, num_address):
 
 desktop_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
+#Calling functions
 while True:
-    mode = input("Start new campaign (1) or monitor an ongoing campign (2)? ")
-    if mode == "1":
-        num_address = int(input("How many options are there? "))
+    user_option = input("Start new campaign (1) or view results of a current campaign (2) ")
+    if user_option == "1":
+        num_address = int(input("How many candidates? "))
         address_matrix = create_keys(num_address)
         create_qr_codes(address_matrix, num_address, desktop_path)
-        view_results = input("Do you want to view the live results? y/n ")
-        if view_results == "y":
-            monitor_results(address_matrix, num_address)
-        else:
-            print("test")
-            
-    elif mode == "2":
-        print("Create a .txt document containing an address on each line that you would like to monitor")
-        file_location = input("enter the path of the file")
+    if user_option == "2":
+        num_address = int(input("How many candidates? "))
+        print("Gathering results...")
+        address_matrix = create_keys(num_address)
+        #Need to open address file and read off one by one.
         address_list = []
-        f = open((file_location), "r")
-        
+        f = open((desktop_path + "\\address_list.txt"), "r")
         for line in f:
             stripped_line = line.strip()
             line_list = stripped_line.split()
             address_list.append(line_list)
         f.close()
-        
-        while True:
-            for_counter = 0
-            time.sleep(5)
-            print("\n")
-            for i in range(0, len(address_list)):
-                txs = history(address_list[for_counter])
-                tx_count = len(txs)
-                print("Option " + (str(for_counter + 1)) + ": " + str((tx_count)))
-                for_counter = for_counter + 1
-                
-        
+        monitor_results(address_matrix, num_address, address_list)

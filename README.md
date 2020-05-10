@@ -8,6 +8,7 @@ Assuming each citizen in a country submits a Bitcoin address that they control a
 * Bitcoin is not currently adopted on a large enough scale.
 * The records of Bitcoin address ownership would be target for manipulation.
 * Each citizen must pay to take part in the election (although this amount is negligible).
+* This program in particular relies on a third party to gather information about the blockchain (although this could be overcome by hosting a full node).
 
 Harry Robson 2020 
 

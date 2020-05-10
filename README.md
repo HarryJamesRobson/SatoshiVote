@@ -1,7 +1,13 @@
 # SatoshiVote
-A Python 3.8 program that allows for the easy creation of polls that users can cast their vote on by sending a satoshi to the corresponding address.
+A Python 3.8 proof of concept for blockchain election voting. 
 
-## Usage:
-Run the program using command prompt or a Python IDE. Follow the on-screen instructions. The program will output a number of QR codes to your desktop. You can then monitor these addresses using the other mode.
+## Theory
+Assuming each citizen in a country submits a Bitcoin address that they control and this is recorded with their name by the government then they could vote by sending a satoshi to the bitcoin address that corresponds with their preferred candiate.
 
-Made by Harry Robson 2020. If this project comes in handy and you want to make a donation, my Bitcoin address is: 1GyJS5JeQMKm8zVcbwp6XUQCukrABV8Fts
+## Disadvantages
+* Bitcoin is not currently adopted on a large enough scale.
+* The records of Bitcoin address ownership would be target for manipulation.
+* Each citizen must pay to take part in the election (although this amount is negligible).
+
+Harry Robson 2020 
+
